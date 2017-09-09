@@ -82,7 +82,7 @@ class PlayingState extends BasicGameState {
 			bounces++;
 		}
 		bg.ball.update(delta);
-		bg.paddle.update(container);
+		bg.paddle.update(container, bg);
 
 		// check if there are any finished explosions, if so remove them
 		for (Iterator<Bang> i = bg.explosions.iterator(); i.hasNext();) {
@@ -91,7 +91,7 @@ class PlayingState extends BasicGameState {
 			}
 		}
 
-		if (bounces >= 10) {
+		if (bounces >= 1000) {
 			((GameOverState)game.getState(BounceGame.GAMEOVERSTATE)).setUserScore(bounces);
 			game.enterState(BounceGame.GAMEOVERSTATE);
 		}

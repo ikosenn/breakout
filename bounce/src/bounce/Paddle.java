@@ -3,6 +3,7 @@ package bounce;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
 import jig.Entity;
 import jig.Vector;
@@ -29,10 +30,10 @@ public class Paddle extends Entity {
 	
 	public void setVelocity(float x, float y) {
 		// restrict the max velocity of the paddle
-		if (Math.abs(this.velocity.getX()) <= max_velocity) {
-			velocity = this.getVelocity().add(new Vector(x, y));
-		} else if (x == 0f) {
+		if (x == 0f) {
 			velocity = new Vector(x, y);
+		} else if (Math.abs(this.velocity.getX()) <= max_velocity) {
+			velocity = this.getVelocity().add(new Vector(x, y));
 		}
 	}
 
@@ -41,16 +42,37 @@ public class Paddle extends Entity {
 	}
 	
 	/**
+	 * 
+	 * @return true if it has reached the bounds of the game otherwise false
+	 */
+	private boolean checkCollision(char direction, BounceGame game) {
+		if (this.getCoarseGrainedMaxX() >= game.ScreenWidth && direction == 'R') {
+			return false;
+		}
+		if (this.getCoarseGrainedMinX() <= 0 && direction == 'L') {
+			return false;
+		}
+//		// last check in case the 
+//		if (this.getCoarseGrainedMaxX() >= game.ScreenWidth || )
+		
+		return true;
+	}
+	
+	/**
 	 * Updates the position of the paddle based on the users input. 
 	 * 
 	 * @param container
 	 * A generic game container that handles the game loop, fps recording and managing the input system 
+	 * 
+	 * @param game
+	 * Holds the state of the game.
 	 */
-	public void update(GameContainer container) throws SlickException {
+	public void update(GameContainer container, BounceGame game) throws SlickException {
 		Input input = container.getInput();
 		
+
 		boolean moved = false;
-		if (input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT)) {
+		if ((input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT)) && this.checkCollision('L', game)) {
 			// check if the paddle was moving to the right
 			if (this.getVelocity().getX() > 0f) {
 				// reset it
@@ -59,13 +81,13 @@ public class Paddle extends Entity {
 			this.setVelocity(-.2f, 0f);
 			moved = true;
 		}
-		if (input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT)){
-			this.setVelocity(+.2f, 0f);
+		if ((input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT)) && this.checkCollision('R', game)){
 			// check if the paddle was moving to the left
 			if (this.getVelocity().getX() < 0f) {
 				// reset it
 				this.setVelocity(0f, 0f);
 			}
+			this.setVelocity(+.2f, 0f);
 			moved = true;
 		}
 		translate(this.getVelocity());
@@ -73,7 +95,7 @@ public class Paddle extends Entity {
 		if (!moved) {
 			this.setVelocity(0f, 0f);
 		}
-		
+			
 	}
 	
 }
