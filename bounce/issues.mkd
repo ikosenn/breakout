@@ -8,10 +8,10 @@
 - **[6]** Add explosion sound
 - **[7]** Use a proper Slick StateBasedGame.
 - **[8]** Use fully specified resource path, preload resources if possible
+- **[9]** Add a paddle that is controlled by a user.
 
 ## Open Issues ##
 
-- **[9]** Add a paddle that is controlled by a user.
 - **[10]** Add bricks with different bounce rates 
 - **[11]** Add persistent high score tracking using files
 - **[12]** Add a customized splash screen

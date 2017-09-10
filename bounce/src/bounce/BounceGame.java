@@ -36,9 +36,12 @@ import org.newdawn.slick.state.StateBasedGame;
  * Sound resources courtesy of DJ Chronos:
  * http://www.freesound.org/people/DJ%20Chronos/sounds/123236/
  * 
+ * Breakout pieces courtesy of Buch:
+ * https://opengameart.org/content/breakout-set
  * 
  * @author wallaces
- * 
+ * @author peculiar_yak
+ *  
  */
 public class BounceGame extends StateBasedGame {
 	
@@ -46,6 +49,7 @@ public class BounceGame extends StateBasedGame {
 	public static final int PLAYINGSTATE = 1;
 	public static final int GAMEOVERSTATE = 2;
 	
+	public static final String BREAKOUT_PIECES_RSC = "bounce/resource/breakout_pieces.png";
 	public static final String BALL_BALLIMG_RSC = "bounce/resource/ball.png";
 	public static final String BALL_BROKENIMG_RSC = "bounce/resource/brokenball.png";
 	public static final String GAMEOVER_BANNER_RSC = "bounce/resource/gameover.png";
@@ -57,6 +61,7 @@ public class BounceGame extends StateBasedGame {
 	public final int ScreenHeight;
 
 	Ball ball;
+	Paddle paddle;
 	ArrayList<Bang> explosions;
 
 	/**
@@ -99,8 +104,10 @@ public class BounceGame extends StateBasedGame {
 		ResourceManager.loadImage(GAMEOVER_BANNER_RSC);
 		ResourceManager.loadImage(STARTUP_BANNER_RSC);
 		ResourceManager.loadImage(BANG_EXPLOSIONIMG_RSC);
+		ResourceManager.loadImage(BREAKOUT_PIECES_RSC);
 		
 		ball = new Ball(ScreenWidth / 2, ScreenHeight / 2, .1f, .2f);
+		paddle = new Paddle(ScreenWidth / 2, 600, .0f, .0f);
 
 	}
 	
