@@ -63,6 +63,7 @@ public class BounceGame extends StateBasedGame {
 	Ball ball;
 	Paddle paddle;
 	ArrayList<Bang> explosions;
+	Brick[][] bricks;
 
 	/**
 	 * Create the BounceGame frame, saving the width and height for later use.
@@ -107,7 +108,8 @@ public class BounceGame extends StateBasedGame {
 		ResourceManager.loadImage(BREAKOUT_PIECES_RSC);
 		
 		ball = new Ball(ScreenWidth / 2, ScreenHeight / 2, .1f, .2f);
-		paddle = new Paddle(ScreenWidth / 2, 600, .0f, .0f);
+		paddle = new Paddle(ScreenWidth / 2, 590, .0f, .0f);
+		bricks = Brick.drawBlocks(23, 6);
 
 	}
 	

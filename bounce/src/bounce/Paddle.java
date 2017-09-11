@@ -3,7 +3,6 @@ package bounce;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
 
 import jig.Entity;
 import jig.Vector;
@@ -24,7 +23,7 @@ public class Paddle extends Entity {
 	public Paddle(final float x, final float y, final float vx, final float vy) {
 		super(x, y);
 		addImageWithBoundingBox(ResourceManager
-				.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 352 ,200).getSubImage(50, 70, 60, 30));
+				.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 352 ,200).getSubImage(50, 70, 60, 15));
 		velocity = new Vector(vx, vy);
 	}
 	

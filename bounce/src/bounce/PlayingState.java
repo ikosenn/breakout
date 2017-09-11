@@ -45,6 +45,12 @@ class PlayingState extends BasicGameState {
 		g.drawString("Bounces: " + bounces, 10, 30);
 		for (Bang b : bg.explosions)
 			b.render(g);
+		
+		for(int row=0; row < bg.bricks.length; row++) {
+            for(int col=0; col < bg.bricks[row].length; col++) {
+                bg.bricks[row][col].render(g);
+            }
+        }
 	}
 
 	@Override
