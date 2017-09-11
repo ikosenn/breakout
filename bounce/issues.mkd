@@ -11,10 +11,10 @@
 - **[9]** Add a paddle that is controlled by a user.
 - **[10]** Add bricks with different bounce rates 
 - **[11]** Add persistent high score tracking using files
+- **[12]** Add a customized splash screen
 
 ## Open Issues ##
 
-- **[12]** Add a customized splash screen
 - **[13]** Convert ball from a square to a circle.
 - **[14]** Make paddle affect the direction of the ball
 - **[15]** Make ball to break the bricks when it hits them
