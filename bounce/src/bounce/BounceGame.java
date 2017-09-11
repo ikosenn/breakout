@@ -39,15 +39,19 @@ import org.newdawn.slick.state.StateBasedGame;
  * Breakout pieces courtesy of Buch:
  * https://opengameart.org/content/breakout-set
  * 
+ * Slpash Screen Photo by Josh Calabrese on Unsplash
+ * https://unsplash.com/photos/zcYRw547Dps
+ * 
  * @author wallaces
  * @author peculiar_yak
  *  
  */
 public class BounceGame extends StateBasedGame {
 	
-	public static final int STARTUPSTATE = 0;
-	public static final int PLAYINGSTATE = 1;
-	public static final int GAMEOVERSTATE = 2;
+	public static final int SPLASHSCREEN = 0;
+	public static final int STARTUPSTATE = 1;
+	public static final int PLAYINGSTATE = 2;
+	public static final int GAMEOVERSTATE = 3;
 	
 	public static final String BREAKOUT_PIECES_RSC = "bounce/resource/breakout_pieces.png";
 	public static final String BALL_BALLIMG_RSC = "bounce/resource/ball.png";
@@ -56,6 +60,7 @@ public class BounceGame extends StateBasedGame {
 	public static final String STARTUP_BANNER_RSC = "bounce/resource/PressSpace.png";
 	public static final String BANG_EXPLOSIONIMG_RSC = "bounce/resource/explosion.png";
 	public static final String BANG_EXPLOSIONSND_RSC = "bounce/resource/explosion.wav";
+	public static final String SPLASH_SCREEN_RSC = "bounce/resource/splashscreen.jpg";
 
 	public final int ScreenWidth;
 	public final int ScreenHeight;
@@ -88,6 +93,7 @@ public class BounceGame extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
+		addState(new SplashScreenState());
 		addState(new StartUpState());
 		addState(new GameOverState());
 		addState(new PlayingState());
@@ -106,6 +112,7 @@ public class BounceGame extends StateBasedGame {
 		ResourceManager.loadImage(STARTUP_BANNER_RSC);
 		ResourceManager.loadImage(BANG_EXPLOSIONIMG_RSC);
 		ResourceManager.loadImage(BREAKOUT_PIECES_RSC);
+		ResourceManager.loadImage(SPLASH_SCREEN_RSC);
 		
 		ball = new Ball(ScreenWidth / 2, ScreenHeight / 2, .1f, .2f);
 		paddle = new Paddle(ScreenWidth / 2, 590, .0f, .0f);
@@ -118,6 +125,7 @@ public class BounceGame extends StateBasedGame {
 		try {
 			app = new AppGameContainer(new BounceGame("Bounce!", 800, 600));
 			app.setDisplayMode(800, 600, false);
+			app.setShowFPS(false);
 			app.setVSync(true);
 			app.start();
 		} catch (SlickException e) {
