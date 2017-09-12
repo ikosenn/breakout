@@ -12,10 +12,10 @@
 - **[10]** Add bricks with different bounce rates 
 - **[11]** Add persistent high score tracking using files
 - **[12]** Add a customized splash screen
+- **[13]** Convert ball from a square to a circle.
 
 ## Open Issues ##
 
-- **[13]** Convert ball from a square to a circle.
 - **[14]** Make paddle affect the direction of the ball
 - **[15]** Make ball to break the bricks when it hits them
 - **[16]** Add lives indicator

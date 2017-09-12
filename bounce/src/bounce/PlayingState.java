@@ -33,7 +33,7 @@ class PlayingState extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
 		bounces = 0;
-		container.setSoundOn(true);
+		container.setSoundOn(false);
 	}
 	@Override
 	public void render(GameContainer container, StateBasedGame game,

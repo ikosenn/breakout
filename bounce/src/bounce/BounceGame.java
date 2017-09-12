@@ -116,7 +116,7 @@ public class BounceGame extends StateBasedGame {
 		
 		ball = new Ball(ScreenWidth / 2, ScreenHeight / 2, .1f, .2f);
 		paddle = new Paddle(ScreenWidth / 2, 590, .0f, .0f);
-		bricks = Brick.drawBlocks(23, 6);
+		bricks = Brick.drawBlocks(12, 6);
 
 	}
 	
