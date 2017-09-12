@@ -21,7 +21,7 @@ public class SplashScreenState extends BasicGameState {
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		timer = 4000;
+		timer = 1000;
 	}
 
 

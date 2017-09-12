@@ -8,17 +8,17 @@ import jig.ResourceManager;
 public class Brick extends Entity {
 	private int strength; // how many times to hit the brick
 	private static int height = 15;
-	private static int width = 35;
+	private static int width = 70;
 	
 	public Brick(int x, int y, String type) {
 		super(x, y);
-		if (type == "BLUE") {
+		if (type == "RED") {
 			addImageWithBoundingBox(ResourceManager
-					.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 352 ,200).getSubImage(5, 9, width, height));
+					.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 352 ,200).getSubImage(100, 80, width, height));
 			this.strength = 1;
-		} else if (type == "RED") {
+		} else if (type == "BLUE") {
 			addImageWithBoundingBox(ResourceManager
-					.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 352 ,200).getSubImage(5, 49, width, height));
+					.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 352 ,200).getSubImage(480, 320, width, height));
 			this.strength = 2;
 		}
 	}
@@ -51,18 +51,18 @@ public class Brick extends Entity {
 	
 	public static Brick[][] drawBlocks(int x, int y) {
 		Brick[][] brickMaze = new Brick[y][x];
-		int blockX = 15;
+		int blockX = 35;
 		int blockY = 60;
 		for (int i = 0; i < y; i++) {
 			for (int j = 0; j < x; j++) {
 				Random random = new Random();
-				String a = "RED";
-				String b = "BLUE";
+				String a = "BLUE";
+				String b = "RED";
 				String c = random.nextBoolean() ? a : b;
 				brickMaze[i][j] = new Brick(blockX, blockY, c);
 				blockX += width;
 			}
-			blockX = 15;
+			blockX = 35;
 			blockY += height;
 		}
 		return brickMaze;
