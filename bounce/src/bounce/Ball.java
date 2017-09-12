@@ -13,14 +13,12 @@ import jig.Vector;
  class Ball extends Entity {
 
 	private Vector velocity;
-	private int countdown;
 
 	public Ball(final float x, final float y, final float vx, final float vy) {
 		super(x, y);
 		addImageWithBoundingBox(ResourceManager
-				.getImage(BounceGame.BALL_BALLIMG_RSC));
+				.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 1280 ,800).getSubImage(18, 610, 12, 12));
 		velocity = new Vector(vx, vy);
-		countdown = 0;
 	}
 
 	public void setVelocity(final Vector v) {
@@ -40,10 +38,6 @@ import jig.Vector;
 	 * @param surfaceTangent
 	 */
 	public void bounce(float surfaceTangent) {
-		removeImage(ResourceManager.getImage(BounceGame.BALL_BALLIMG_RSC));
-		addImageWithBoundingBox(ResourceManager
-				.getImage(BounceGame.BALL_BROKENIMG_RSC));
-		countdown = 500;
 		velocity = velocity.bounce(surfaceTangent);
 	}
 
@@ -55,14 +49,6 @@ import jig.Vector;
 	 */
 	public void update(final int delta) {
 		translate(velocity.scale(delta));
-		if (countdown > 0) {
-			countdown -= delta;
-			if (countdown <= 0) {
-				addImageWithBoundingBox(ResourceManager
-						.getImage(BounceGame.BALL_BALLIMG_RSC));
-				removeImage(ResourceManager
-						.getImage(BounceGame.BALL_BROKENIMG_RSC));
-			}
-		}
+		
 	}
 }

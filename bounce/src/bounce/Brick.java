@@ -14,11 +14,11 @@ public class Brick extends Entity {
 		super(x, y);
 		if (type == "RED") {
 			addImageWithBoundingBox(ResourceManager
-					.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 352 ,200).getSubImage(100, 80, width, height));
+					.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 1280 ,800).getSubImage(100, 80, width, height));
 			this.strength = 1;
 		} else if (type == "BLUE") {
 			addImageWithBoundingBox(ResourceManager
-					.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 352 ,200).getSubImage(480, 320, width, height));
+					.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 1280 ,800).getSubImage(480, 320, width, height));
 			this.strength = 2;
 		}
 	}

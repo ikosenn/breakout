@@ -23,7 +23,7 @@ public class Paddle extends Entity {
 	public Paddle(final float x, final float y, final float vx, final float vy) {
 		super(x, y);
 		addImageWithBoundingBox(ResourceManager
-				.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 352 ,200).getSubImage(0, 418, 80, 15));
+				.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 1280 ,800).getSubImage(0, 418, 80, 15));
 		velocity = new Vector(vx, vy);
 	}
 	
