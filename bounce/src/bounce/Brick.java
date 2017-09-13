@@ -68,4 +68,11 @@ public class Brick extends Entity {
 		return brickMaze;
 		
 	}
+	
+	/**
+	 * strength setter
+	 */
+	public void reduceStrength( ) {
+		this.strength -= 1;
+	}
 }

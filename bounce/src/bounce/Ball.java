@@ -57,6 +57,9 @@ import jig.Vector;
 		if (this.hitPaddle(bg.paddle)) {
 			this.bounce(0);
 			bounced = true;
+		} else if (this.hitBrick(bg.bricks)) {
+			this.bounce(0);
+			bounced = true;
 		} else if (this.getCoarseGrainedMaxX() > bg.ScreenWidth
 				|| this.getCoarseGrainedMinX() < 0) {
 			this.bounce(90);
@@ -85,6 +88,29 @@ import jig.Vector;
 		Collision isPen = this.collides(paddle); 
 		if (isPen != null) {
 			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the ball collides with a block. if they collide we 
+	 * bounce the ball away and also reduce the "strength" of the block
+	 * @param bricks
+	 * 
+	 * @return true if the ball hits a brick else false
+	 */
+	public Boolean hitBrick(Brick[][] bricks) {
+		for (int i=0; i < bricks.length; i++) {
+			for (int j=0; j < bricks[i].length; j++) {
+				Collision isPen = this.collides(bricks[i][j]); 
+				if (isPen != null) {
+					bricks[i][j].reduceStrength();
+					// we can't have multiple collisions
+					// return when we get one
+					
+					return true;
+				}
+			}
 		}
 		return false;
 	}

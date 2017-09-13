@@ -45,7 +45,10 @@ class PlayingState extends BasicGameState {
 		
 		for(int row=0; row < bg.bricks.length; row++) {
             for(int col=0; col < bg.bricks[row].length; col++) {
-                bg.bricks[row][col].render(g);
+            		// draw alive bricks only 
+            		if (bg.bricks[row][col].isAlive()) {
+            			bg.bricks[row][col].render(g);
+            		}
             }
         }
 	}
