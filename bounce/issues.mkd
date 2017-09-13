@@ -13,12 +13,12 @@
 - **[11]** Add persistent high score tracking using files
 - **[12]** Add a customized splash screen
 - **[13]** Convert ball from a square to a circle.
+- **[14]** Make paddle affect the direction of the ball
 
 ## Open Issues ##
 
-- **[14]** Make paddle affect the direction of the ball
 - **[15]** Make ball to break the bricks when it hits them
-- **[16]** Add lives indicator
+- **[16]** Add lives, score, high score indicator
 - **[17]** Reduce lives when the ball goes below the screen 
 - **[18]** Add corrected ball collision detection
 - **[19]** Add different levels.

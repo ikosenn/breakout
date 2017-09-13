@@ -1,5 +1,6 @@
 package bounce;
 
+import jig.Collision;
 import jig.Entity;
 import jig.ResourceManager;
 import jig.Vector;
@@ -47,8 +48,44 @@ import jig.Vector;
 	 * @param delta
 	 *            the number of milliseconds since the last update
 	 */
-	public void update(final int delta) {
+	public void update(BounceGame bg, final int delta) {
 		translate(velocity.scale(delta));
 		
+		
+		// bounce the ball...
+		boolean bounced = false;
+		if (this.hitPaddle(bg.paddle)) {
+			this.bounce(0);
+			bounced = true;
+		} else if (this.getCoarseGrainedMaxX() > bg.ScreenWidth
+				|| this.getCoarseGrainedMinX() < 0) {
+			this.bounce(90);
+			bounced = true;
+		} else if (this.getCoarseGrainedMaxY() > bg.ScreenHeight
+				|| this.getCoarseGrainedMinY() < 0) {
+			this.bounce(0);
+			bounced = true;
+		}
+		 
+		if (bounced) {
+			bg.explosions.add(new Bang(this.getX(), this.getY()));
+		}
+		
+	}
+	
+	/**
+	 *  Checks if the ball hits the paddle. if so bounces the ball. 
+	 *  
+	 * @param paddle
+	 * The entity to which we are checking against
+	 * 
+	 * @return true if a collision happens else return false
+	 */
+	public Boolean hitPaddle(Paddle paddle) {
+		Collision isPen = this.collides(paddle); 
+		if (isPen != null) {
+			return true;
+		}
+		return false;
 	}
 }
