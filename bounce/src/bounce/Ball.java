@@ -102,13 +102,16 @@ import jig.Vector;
 	public Boolean hitBrick(Brick[][] bricks) {
 		for (int i=0; i < bricks.length; i++) {
 			for (int j=0; j < bricks[i].length; j++) {
-				Collision isPen = this.collides(bricks[i][j]); 
-				if (isPen != null) {
-					bricks[i][j].reduceStrength();
-					// we can't have multiple collisions
-					// return when we get one
+				// check for alive bricks only
+				if (bricks[i][j].isAlive()) {
+					Collision isPen = this.collides(bricks[i][j]); 
+					if (isPen != null) {
+						bricks[i][j].reduceStrength();
+						// we can't have multiple collisions
+						// return when we get one
 					
-					return true;
+						return true;
+					}
 				}
 			}
 		}
