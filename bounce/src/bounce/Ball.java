@@ -58,6 +58,7 @@ import jig.Vector;
 			this.bounce(0);
 			bounced = true;
 		} else if (this.hitBrick(bg.bricks)) {
+			bg.incrementScore();
 			this.bounce(0);
 			bounced = true;
 		} else if (this.getCoarseGrainedMaxX() > bg.ScreenWidth

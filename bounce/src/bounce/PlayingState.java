@@ -20,7 +20,6 @@ import org.newdawn.slick.state.StateBasedGame;
  * Transitions To GameOverState
  */
 class PlayingState extends BasicGameState {
-	int bounces;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -29,7 +28,6 @@ class PlayingState extends BasicGameState {
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		bounces = 0;
 		container.setSoundOn(false);
 	}
 	@Override
@@ -39,7 +37,10 @@ class PlayingState extends BasicGameState {
 		
 		bg.ball.render(g);
 		bg.paddle.render(g);
-		g.drawString("Bounces: " + bounces, 10, 30);
+		g.drawString("Score: " + bg.getScore(), 5, 10);
+		g.drawString("Lives: " + bg.getLife(), 105, 10);
+		g.drawString("High Score: " + bg.getHighScore(), 205, 10);
+		
 		for (Bang b : bg.explosions)
 			b.render(g);
 		
@@ -73,6 +74,5 @@ class PlayingState extends BasicGameState {
 	@Override
 	public int getID() {
 		return BounceGame.PLAYINGSTATE;
-	}
-	
+	}	
 }

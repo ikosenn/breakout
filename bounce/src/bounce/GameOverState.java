@@ -37,9 +37,14 @@ class GameOverState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game) {
 		timer = 4000;
 	}
-
-	public void setUserScore(int bounces) {
-		lastKnownBounces = bounces;
+	
+	/**
+	 * Update the user's high score
+	 * @param score. The score attained during the game play
+	 */
+	public void setUserScore(int score) {
+		FileStore storage = new FileStore();
+		storage.saveHighScore(score);
 	}
 	
 	@Override

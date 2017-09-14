@@ -22,10 +22,14 @@ import org.newdawn.slick.state.StateBasedGame;
  * Transitions To PlayingState
  */
 class StartUpState extends BasicGameState {
-
+	private int highScore; 
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
+		
+		FileStore storage = new FileStore();
+		this.highScore = storage.getHighScore();
 	}
 	
 	@Override
@@ -40,7 +44,7 @@ class StartUpState extends BasicGameState {
 		BounceGame bg = (BounceGame)game;
 		
 		bg.ball.render(g);
-		g.drawString("Bounces: ?", 10, 30);
+		g.drawString("High Score: " + this.highScore, 10, 30);
 		for (Bang b : bg.explosions)
 			b.render(g);
 		g.drawImage(ResourceManager.getImage(BounceGame.STARTUP_BANNER_RSC),
