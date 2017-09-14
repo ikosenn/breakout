@@ -61,9 +61,14 @@ public class BounceGame extends StateBasedGame {
 	public static final String BANG_EXPLOSIONIMG_RSC = "bounce/resource/explosion.png";
 	public static final String BANG_EXPLOSIONSND_RSC = "bounce/resource/explosion.wav";
 	public static final String SPLASH_SCREEN_RSC = "bounce/resource/splashscreen.jpg";
+	public static final int GAME_START_BOUNDARY = 60;
 
 	public final int ScreenWidth;
 	public final int ScreenHeight;
+	
+	private int score = 0;
+	private int life = 3;
+	private int highScore = 0;
 
 	Ball ball;
 	Paddle paddle;
@@ -87,6 +92,8 @@ public class BounceGame extends StateBasedGame {
 
 		Entity.setCoarseGrainedCollisionBoundary(Entity.AABB);
 		explosions = new ArrayList<Bang>(10);
+		FileStore storage = new FileStore();
+		this.highScore = storage.getHighScore();
 				
 	}
 
@@ -123,7 +130,7 @@ public class BounceGame extends StateBasedGame {
 	public static void main(String[] args) {
 		AppGameContainer app;
 		try {
-			app = new AppGameContainer(new BounceGame("Bounce!", 800, 600));
+			app = new AppGameContainer(new BounceGame("Breakout!", 800, 600));
 			app.setDisplayMode(800, 600, false);
 			app.setShowFPS(false);
 			app.setVSync(true);
@@ -133,6 +140,69 @@ public class BounceGame extends StateBasedGame {
 		}
 
 	}
+	
+	/**
+	 * Increments the score if a collision happens
+	 */
+	public void incrementScore() {
+		this.score += 1;
+	}
+	
+	/**
+	 * reduce the life if the ball goes below the screen
+	 */
+	public void reduceLives() {
+		this.life -= 1;
+	}
+	
+	/**
+	 * HighScore getter
+	 * @return the high score
+	 */
+	public int getHighScore() {
+		return this.highScore;
+	}
 
+	/**
+	 * Player life getter
+	 * @return the total number of lives left
+	 */
+	public int getLife() {
+		return this.life;
+	}
+	
+	/**
+	 * The Player's score getter
+	 * @return an integer that represents the Player's current score
+	 */
+	public int getScore() {
+		return this.score;
+	}
+
+	/**
+	 * 
+	 * Score setter
+	 */
+	public void setScore() {
+		this.score = 0;
+		
+	}
+
+	/**
+	 * 
+	 * Life setter
+	 */
+	public void setLife() {
+		this.life = 3;
+	}
+
+	/**
+	 * 
+	 * High score setter
+	 */
+	public void updateHighScore() {
+		FileStore storage = new FileStore();
+		this.highScore = storage.getHighScore();
+	}
 	
 }
