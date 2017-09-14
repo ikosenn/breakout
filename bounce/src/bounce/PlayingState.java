@@ -60,7 +60,7 @@ class PlayingState extends BasicGameState {
 
 		BounceGame bg = (BounceGame)game;
 		
-		bg.ball.update(bg, delta);
+		bg.ball.update(bg, container, delta);
 		bg.paddle.update(container, bg);
 		
 		for (Iterator<Bang> i = bg.explosions.iterator(); i.hasNext();) {
@@ -68,6 +68,13 @@ class PlayingState extends BasicGameState {
 				i.remove();
 			}
 		}
+		
+		if (bg.getLife() <= 0) {
+			FileStore storage = new FileStore();
+			storage.saveHighScore(bg.getScore());
+			game.enterState(BounceGame.GAMEOVERSTATE);
+		}
+
 
 	}
 

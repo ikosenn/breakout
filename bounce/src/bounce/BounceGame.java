@@ -61,6 +61,7 @@ public class BounceGame extends StateBasedGame {
 	public static final String BANG_EXPLOSIONIMG_RSC = "bounce/resource/explosion.png";
 	public static final String BANG_EXPLOSIONSND_RSC = "bounce/resource/explosion.wav";
 	public static final String SPLASH_SCREEN_RSC = "bounce/resource/splashscreen.jpg";
+	public static final int GAME_START_BOUNDARY = 60;
 
 	public final int ScreenWidth;
 	public final int ScreenHeight;
@@ -148,6 +149,13 @@ public class BounceGame extends StateBasedGame {
 	}
 	
 	/**
+	 * reduce the life if the ball goes below the screen
+	 */
+	public void reduceLives() {
+		this.life -= 1;
+	}
+	
+	/**
 	 * HighScore getter
 	 * @return the high score
 	 */
@@ -169,6 +177,32 @@ public class BounceGame extends StateBasedGame {
 	 */
 	public int getScore() {
 		return this.score;
+	}
+
+	/**
+	 * 
+	 * Score setter
+	 */
+	public void setScore() {
+		this.score = 0;
+		
+	}
+
+	/**
+	 * 
+	 * Life setter
+	 */
+	public void setLife() {
+		this.life = 3;
+	}
+
+	/**
+	 * 
+	 * High score setter
+	 */
+	public void updateHighScore() {
+		FileStore storage = new FileStore();
+		this.highScore = storage.getHighScore();
 	}
 	
 }

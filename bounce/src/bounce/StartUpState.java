@@ -1,7 +1,5 @@
 package bounce;
 
-import java.util.Iterator;
-
 import jig.ResourceManager;
 
 import org.newdawn.slick.GameContainer;
@@ -27,14 +25,17 @@ class StartUpState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		
-		FileStore storage = new FileStore();
-		this.highScore = storage.getHighScore();
 	}
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
 		container.setSoundOn(false);
+		FileStore storage = new FileStore();
+		this.highScore = storage.getHighScore();
+		BounceGame bg = (BounceGame)game;
+		bg.setScore();
+		bg.setLife();
+		bg.updateHighScore();
 	}
 
 
@@ -60,16 +61,6 @@ class StartUpState extends BasicGameState {
 
 		if (input.isKeyDown(Input.KEY_SPACE))
 			bg.enterState(BounceGame.PLAYINGSTATE);	
-
-		bg.ball.update(bg, delta);
-
-		// check if there are any finished explosions, if so remove them
-		for (Iterator<Bang> i = bg.explosions.iterator(); i.hasNext();) {
-			if (!i.next().isActive()) {
-				i.remove();
-			}
-		}
-
 	}
 
 	@Override

@@ -38,21 +38,11 @@ class GameOverState extends BasicGameState {
 		timer = 4000;
 	}
 	
-	/**
-	 * Update the user's high score
-	 * @param score. The score attained during the game play
-	 */
-	public void setUserScore(int score) {
-		FileStore storage = new FileStore();
-		storage.saveHighScore(score);
-	}
-	
 	@Override
 	public void render(GameContainer container, StateBasedGame game,
 			Graphics g) throws SlickException {
 
 		BounceGame bg = (BounceGame)game;
-		g.drawString("Bounces: " + lastKnownBounces, 10, 30);
 		for (Bang b : bg.explosions)
 			b.render(g);
 		g.drawImage(ResourceManager.getImage(BounceGame.GAMEOVER_BANNER_RSC), 225,
