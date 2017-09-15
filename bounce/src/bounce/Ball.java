@@ -17,12 +17,18 @@ import jig.Vector;
  class Ball extends Entity {
 
 	private Vector velocity;
+	private Vector oldVelocity; // save velocity before reseting the ball
 
-	public Ball(final float x, final float y, final float vx, final float vy) {
+	public Ball(final float x, final float y, int level) {
 		super(x, y);
 		addImageWithBoundingBox(ResourceManager
 				.getSpriteSheet(BounceGame.BREAKOUT_PIECES_RSC, 1280 ,800).getSubImage(18, 610, 12, 12));
-		velocity = new Vector(vx, vy);
+		if (level == 1 || level == 3) {
+			this.oldVelocity = new Vector(.1f, -.2f);
+		} else {
+			this.oldVelocity = new Vector(.2f, -.4f);
+		}
+		this.velocity = new Vector(0f, 0f);
 	}
 
 	public void setVelocity(final Vector v) {
@@ -58,8 +64,7 @@ import jig.Vector;
 	 */
 	public void update(BounceGame bg, GameContainer container, final int delta) {
 		translate(velocity.scale(delta));
-		Input input = container.getInput();
-		
+		Input input = container.getInput();		
 		
 		// bounce the ball...
 		boolean bounced = false;
@@ -83,8 +88,7 @@ import jig.Vector;
 		} else if (input.isKeyDown(Input.KEY_SPACE) && 
 				this.getVelocity().getX() == 0f && this.getVelocity().getY() == 0f) {
 			// move ball if stationary 
-			Vector ballVelocity = new Vector(.1f, -.2f);
-			this.setVelocity(ballVelocity);
+			this.setVelocity(this.oldVelocity);
 		}
 		 
 		if (bounced) {
@@ -100,6 +104,7 @@ import jig.Vector;
 	 */
 	public void resetBall(BounceGame bg) {
 		float paddleX = bg.paddle.getX();
+		this.oldVelocity = this.getVelocity();
 		Vector ballVelocity = new Vector(0f, 0f);
 		this.setPosition(paddleX, 575f);
 		this.setVelocity(ballVelocity);

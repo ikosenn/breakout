@@ -28,18 +28,34 @@ class PlayingState extends BasicGameState {
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		container.setSoundOn(false);
+		BounceGame bg = (BounceGame)game;
+		container.setSoundOn(true);
+		
+		if (bg.getLevel() == 1) {
+			bg.ball.add(new Ball(bg.ScreenWidth / 2, 575f, bg.getLevel()));
+		} else if (bg.getLevel() == 2 ) {
+			bg.ball.add(new Ball(bg.ScreenWidth / 2, 575f, bg.getLevel()));
+		} else if (bg.getLevel() == 3 ) {
+			bg.ball.add(new Ball((bg.ScreenWidth / 2) - 30, 575f, bg.getLevel()));
+			bg.ball.add(new Ball((bg.ScreenWidth / 2) + 30, 575f, bg.getLevel()));
+		}
+		bg.paddle = new Paddle(bg.ScreenWidth / 2, 590, .0f, .0f);
+		bg.bricks = Brick.drawBlocks(12, 4, bg.getLevel());
 	}
+	
 	@Override
 	public void render(GameContainer container, StateBasedGame game,
 			Graphics g) throws SlickException {
 		BounceGame bg = (BounceGame)game;
 		
-		bg.ball.render(g);
+		for (Ball ball: bg.ball) {
+			ball.render(g);
+		}
 		bg.paddle.render(g);
-		g.drawString("Score: " + bg.getScore(), 5, 10);
-		g.drawString("Lives: " + bg.getLife(), 105, 10);
-		g.drawString("High Score: " + bg.getHighScore(), 205, 10);
+		g.drawString("Level: " + bg.getLevel(), 5, 10);
+		g.drawString("Score: " + bg.getScore(), 105, 10);
+		g.drawString("Lives: " + bg.getLife(), 205, 10);
+		g.drawString("High Score: " + bg.getHighScore(), 305, 10);
 		
 		for (Bang b : bg.explosions)
 			b.render(g);
@@ -57,10 +73,14 @@ class PlayingState extends BasicGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game,
 			int delta) throws SlickException {
-
+		
+		int bricksLeft = 0;
 		BounceGame bg = (BounceGame)game;
 		
-		bg.ball.update(bg, container, delta);
+		for (Ball ball: bg.ball) {
+			ball.update(bg, container, delta);
+		}
+		
 		bg.paddle.update(container, bg);
 		
 		for (Iterator<Bang> i = bg.explosions.iterator(); i.hasNext();) {
@@ -69,6 +89,20 @@ class PlayingState extends BasicGameState {
 			}
 		}
 		
+		for(int row=0; row < bg.bricks.length; row++) {
+            for(int col=0; col < bg.bricks[row].length; col++) {
+            		// draw alive bricks only 
+            		if (bg.bricks[row][col].isAlive()) {
+            			bricksLeft += 1;
+            		}
+            }
+        }
+		if (bricksLeft == 0 && bg.getLevel() == BounceGame.MAX_LEVELS) {
+			game.enterState(BounceGame.GAMEOVERSTATE);
+		} else if(bricksLeft == 0) {
+			bg.setLevel(bg.getLevel() + 1);
+			game.enterState(BounceGame.STARTUPSTATE);
+		}
 		if (bg.getLife() <= 0) {
 			FileStore storage = new FileStore();
 			storage.saveHighScore(bg.getScore());

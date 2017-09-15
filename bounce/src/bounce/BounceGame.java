@@ -52,6 +52,7 @@ public class BounceGame extends StateBasedGame {
 	public static final int STARTUPSTATE = 1;
 	public static final int PLAYINGSTATE = 2;
 	public static final int GAMEOVERSTATE = 3;
+	public static final int MAX_LEVELS = 3;
 	
 	public static final String BREAKOUT_PIECES_RSC = "bounce/resource/breakout_pieces.png";
 	public static final String BALL_BALLIMG_RSC = "bounce/resource/ball.png";
@@ -67,10 +68,11 @@ public class BounceGame extends StateBasedGame {
 	public final int ScreenHeight;
 	
 	private int score = 0;
-	private int life = 3;
+	private int life = 30;
 	private int highScore = 0;
+	private int level = 1;
 
-	Ball ball;
+	ArrayList<Ball> ball = new ArrayList<Ball>();
 	Paddle paddle;
 	ArrayList<Bang> explosions;
 	Brick[][] bricks;
@@ -121,10 +123,6 @@ public class BounceGame extends StateBasedGame {
 		ResourceManager.loadImage(BREAKOUT_PIECES_RSC);
 		ResourceManager.loadImage(SPLASH_SCREEN_RSC);
 		
-		ball = new Ball(ScreenWidth / 2, ScreenHeight / 2, .1f, .2f);
-		paddle = new Paddle(ScreenWidth / 2, 590, .0f, .0f);
-		bricks = Brick.drawBlocks(12, 6);
-
 	}
 	
 	public static void main(String[] args) {
@@ -203,6 +201,22 @@ public class BounceGame extends StateBasedGame {
 	public void updateHighScore() {
 		FileStore storage = new FileStore();
 		this.highScore = storage.getHighScore();
+	}
+	
+	/**
+	 * 
+	 * Level setter
+	 */
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
+	/**
+	 * 
+	 * Level getter
+	 */
+	public int getLevel() {
+		return this.level;
 	}
 	
 }
