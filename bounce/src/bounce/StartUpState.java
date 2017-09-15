@@ -37,11 +37,6 @@ class StartUpState extends BasicGameState {
 		BounceGame bg = (BounceGame)game;
 		bg.updateHighScore();
 		bg.ball = new ArrayList<Ball>();
-		
-		// if game is on level 3 reset back to level one
-		if (bg.getLevel() == 3) {
-			bg.setLevel(1);
-		}
 	}
 
 
