@@ -26,7 +26,6 @@ class GameOverState extends BasicGameState {
 	
 
 	private int timer;
-	private int lastKnownBounces; // the user's score, to be displayed, but not updated.
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -35,6 +34,8 @@ class GameOverState extends BasicGameState {
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
+		BounceGame bg = (BounceGame)game;
+		bg.setLevel(1);  // reset the levels
 		timer = 4000;
 	}
 	

@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -74,6 +75,8 @@ class PlayingState extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game,
 			int delta) throws SlickException {
 		
+		Input input = container.getInput();		
+		
 		int bricksLeft = 0;
 		BounceGame bg = (BounceGame)game;
 		
@@ -107,6 +110,18 @@ class PlayingState extends BasicGameState {
 			FileStore storage = new FileStore();
 			storage.saveHighScore(bg.getScore());
 			game.enterState(BounceGame.GAMEOVERSTATE);
+		}
+		
+		// cheat codes
+		
+		if (input.isKeyDown(Input.KEY_Z)) {
+			bg.setLevel(2);
+			game.enterState(BounceGame.STARTUPSTATE);
+		}
+		
+		if (input.isKeyDown(Input.KEY_X)) {
+			bg.setLevel(3);
+			game.enterState(BounceGame.STARTUPSTATE);
 		}
 
 

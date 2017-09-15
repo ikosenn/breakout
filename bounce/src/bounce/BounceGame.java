@@ -68,7 +68,7 @@ public class BounceGame extends StateBasedGame {
 	public final int ScreenHeight;
 	
 	private int score = 0;
-	private int life = 30;
+	private int life = 3;
 	private int highScore = 0;
 	private int level = 1;
 
