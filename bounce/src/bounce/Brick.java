@@ -49,16 +49,19 @@ public class Brick extends Entity {
 	 * Returns a multi-dimensional array
 	 */
 	
-	public static Brick[][] drawBlocks(int x, int y) {
+	public static Brick[][] drawBlocks(int x, int y, int level) {
 		Brick[][] brickMaze = new Brick[y][x];
 		int blockX = 35;
+		String c = "RED";
 		int blockY = 60;
 		for (int i = 0; i < y; i++) {
 			for (int j = 0; j < x; j++) {
 				Random random = new Random();
-				String a = "BLUE";
-				String b = "RED";
-				String c = random.nextBoolean() ? a : b;
+				if (level > 1 ) {
+					String a = "BLUE";
+					String b = "RED";
+					c = random.nextBoolean() ? a : b;
+				}
 				brickMaze[i][j] = new Brick(blockX, blockY, c);
 				blockX += width;
 			}

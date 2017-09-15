@@ -17,7 +17,7 @@ import jig.ResourceManager;
 public class Paddle extends Entity {
 	
 	private Vector velocity;
-	private float max_velocity = 8f; 
+	private float max_velocity = 9f; 
 	
 	// allow position and velocity to be set for flexibility
 	public Paddle(final float x, final float y, final float vx, final float vy) {

@@ -2,6 +2,8 @@ package bounce;
 
 import jig.ResourceManager;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -33,9 +35,13 @@ class StartUpState extends BasicGameState {
 		FileStore storage = new FileStore();
 		this.highScore = storage.getHighScore();
 		BounceGame bg = (BounceGame)game;
-		bg.setScore();
-		bg.setLife();
 		bg.updateHighScore();
+		bg.ball = new ArrayList<Ball>();
+		
+		// if game is on level 3 reset back to level one
+		if (bg.getLevel() == 3) {
+			bg.setLevel(1);
+		}
 	}
 
 
@@ -44,8 +50,8 @@ class StartUpState extends BasicGameState {
 			Graphics g) throws SlickException {
 		BounceGame bg = (BounceGame)game;
 		
-		bg.ball.render(g);
-		g.drawString("High Score: " + this.highScore, 10, 30);
+		g.drawString("Level: " + bg.getLevel(), 5, 30);
+		g.drawString("High Score: " + this.highScore, 105, 30);
 		for (Bang b : bg.explosions)
 			b.render(g);
 		g.drawImage(ResourceManager.getImage(BounceGame.STARTUP_BANNER_RSC),
