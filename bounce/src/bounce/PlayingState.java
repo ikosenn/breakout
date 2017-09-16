@@ -2,8 +2,6 @@ package bounce;
 
 import java.util.Iterator;
 
-import jig.Vector;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -23,7 +21,6 @@ import org.newdawn.slick.state.StateBasedGame;
  * Transitions To GameOverState
  */
 class PlayingState extends BasicGameState {
-	int bounces;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -32,72 +29,120 @@ class PlayingState extends BasicGameState {
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		bounces = 0;
+		BounceGame bg = (BounceGame)game;
 		container.setSoundOn(true);
+		
+		if (bg.getLevel() == 1) {
+			bg.ball.add(new Ball(bg.ScreenWidth / 2, 575f, bg.getLevel()));
+		} else if (bg.getLevel() == 2 ) {
+			bg.ball.add(new Ball(bg.ScreenWidth / 2, 575f, bg.getLevel()));
+		} else if (bg.getLevel() == 3 ) {
+			bg.ball.add(new Ball((bg.ScreenWidth / 2) - 30, 575f, bg.getLevel()));
+			bg.ball.add(new Ball((bg.ScreenWidth / 2) + 30, 575f, bg.getLevel()));
+		}
+		bg.paddle = new Paddle(bg.ScreenWidth / 2, 590, .0f, .0f);
+		bg.bricks = Brick.drawBlocks(12, 4, bg.getLevel());
 	}
+	
 	@Override
 	public void render(GameContainer container, StateBasedGame game,
 			Graphics g) throws SlickException {
 		BounceGame bg = (BounceGame)game;
 		
-		bg.ball.render(g);
-		g.drawString("Bounces: " + bounces, 10, 30);
+		for (Ball ball: bg.ball) {
+			ball.render(g);
+		}
+		bg.paddle.render(g);
+		g.drawString("Level: " + bg.getLevel(), 5, 10);
+		g.drawString("Score: " + bg.getScore(), 105, 10);
+		g.drawString("Lives: " + bg.getLife(), 205, 10);
+		g.drawString("High Score: " + bg.getHighScore(), 305, 10);
+		
+		if (bg.powerUp != null) {
+			bg.powerUp.render(g);
+		}
+		
 		for (Bang b : bg.explosions)
 			b.render(g);
+		
+		for(int row=0; row < bg.bricks.length; row++) {
+            for(int col=0; col < bg.bricks[row].length; col++) {
+            		// draw alive bricks only 
+            		if (bg.bricks[row][col].isAlive()) {
+            			bg.bricks[row][col].render(g);
+            		}
+            }
+        }
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game,
 			int delta) throws SlickException {
-
-		Input input = container.getInput();
+		
+		Input input = container.getInput();	
+		boolean killPowerUp;
+		
+		int bricksLeft = 0;
 		BounceGame bg = (BounceGame)game;
 		
-		if (input.isKeyDown(Input.KEY_W)) {
-			bg.ball.setVelocity(bg.ball.getVelocity().add(new Vector(0f, -.001f)));
+		for (Ball ball: bg.ball) {
+			ball.update(bg, container, delta);
 		}
-		if (input.isKeyDown(Input.KEY_S)) {
-			bg.ball.setVelocity(bg.ball.getVelocity().add(new Vector(0f, +.001f)));
-		}
-		if (input.isKeyDown(Input.KEY_A)) {
-			bg.ball.setVelocity(bg.ball.getVelocity().add(new Vector(-.001f, 0)));
-		}
-		if (input.isKeyDown(Input.KEY_D)) {
-			bg.ball.setVelocity(bg.ball.getVelocity().add(new Vector(+.001f, 0f)));
-		}
-		// bounce the ball...
-		boolean bounced = false;
-		if (bg.ball.getCoarseGrainedMaxX() > bg.ScreenWidth
-				|| bg.ball.getCoarseGrainedMinX() < 0) {
-			bg.ball.bounce(90);
-			bounced = true;
-		} else if (bg.ball.getCoarseGrainedMaxY() > bg.ScreenHeight
-				|| bg.ball.getCoarseGrainedMinY() < 0) {
-			bg.ball.bounce(0);
-			bounced = true;
-		}
-		if (bounced) {
-			bg.explosions.add(new Bang(bg.ball.getX(), bg.ball.getY()));
-			bounces++;
-		}
-		bg.ball.update(delta);
-
-		// check if there are any finished explosions, if so remove them
+		if (bg.getScore() > 0 && bg.getScore() % 10 == 0 && bg.powerUp == null) {
+			bg.powerUp  = new PowerUp(bg.paddle.getX() - 15, bg.paddle.getY() - 15);
+		} 
+		if (bg.powerUp != null) {
+			killPowerUp = bg.powerUp.update(bg, container, delta);
+			if (killPowerUp) {
+				bg.powerUp = null;
+			}
+ 		}
+		
+		bg.paddle.update(container, bg);
+		
 		for (Iterator<Bang> i = bg.explosions.iterator(); i.hasNext();) {
 			if (!i.next().isActive()) {
 				i.remove();
 			}
 		}
-
-		if (bounces >= 10) {
-			((GameOverState)game.getState(BounceGame.GAMEOVERSTATE)).setUserScore(bounces);
+		
+		for(int row=0; row < bg.bricks.length; row++) {
+            for(int col=0; col < bg.bricks[row].length; col++) {
+            		// draw alive bricks only 
+            		if (bg.bricks[row][col].isAlive()) {
+            			bricksLeft += 1;
+            		}
+            }
+        }
+		if (bricksLeft == 0 && bg.getLevel() == BounceGame.MAX_LEVELS) {
+			game.enterState(BounceGame.GAMEOVERSTATE);
+		} else if(bricksLeft == 0) {
+			bg.setLevel(bg.getLevel() + 1);
+			game.enterState(BounceGame.STARTUPSTATE);
+		}
+		if (bg.getLife() <= 0) {
+			FileStore storage = new FileStore();
+			storage.saveHighScore(bg.getScore());
 			game.enterState(BounceGame.GAMEOVERSTATE);
 		}
+		
+		// cheat codes
+		
+		if (input.isKeyDown(Input.KEY_Z)) {
+			bg.setLevel(2);
+			game.enterState(BounceGame.STARTUPSTATE);
+		}
+		
+		if (input.isKeyDown(Input.KEY_X)) {
+			bg.setLevel(3);
+			game.enterState(BounceGame.STARTUPSTATE);
+		}
+
+
 	}
 
 	@Override
 	public int getID() {
 		return BounceGame.PLAYINGSTATE;
-	}
-	
+	}	
 }

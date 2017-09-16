@@ -26,7 +26,6 @@ class GameOverState extends BasicGameState {
 	
 
 	private int timer;
-	private int lastKnownBounces; // the user's score, to be displayed, but not updated.
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -35,11 +34,10 @@ class GameOverState extends BasicGameState {
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
+		BounceGame bg = (BounceGame)game;
+		bg.setLevel(1);  // reset the levels
+		bg.setLife();
 		timer = 4000;
-	}
-
-	public void setUserScore(int bounces) {
-		lastKnownBounces = bounces;
 	}
 	
 	@Override
@@ -47,7 +45,6 @@ class GameOverState extends BasicGameState {
 			Graphics g) throws SlickException {
 
 		BounceGame bg = (BounceGame)game;
-		g.drawString("Bounces: " + lastKnownBounces, 10, 30);
 		for (Bang b : bg.explosions)
 			b.render(g);
 		g.drawImage(ResourceManager.getImage(BounceGame.GAMEOVER_BANNER_RSC), 225,
