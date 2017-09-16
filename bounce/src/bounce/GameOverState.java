@@ -36,6 +36,7 @@ class GameOverState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game) {
 		BounceGame bg = (BounceGame)game;
 		bg.setLevel(1);  // reset the levels
+		bg.setLife();
 		timer = 4000;
 	}
 	

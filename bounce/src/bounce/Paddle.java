@@ -42,18 +42,17 @@ public class Paddle extends Entity {
 	
 	/**
 	 * 
-	 * @return true if it has reached the bounds of the game otherwise false
+	 * @return false if it has reached the bounds of the game otherwise true
 	 */
 	private boolean checkCollision(char direction, BounceGame game) {
 		if (this.getCoarseGrainedMaxX() >= game.ScreenWidth && direction == 'R') {
+			this.setPosition(game.ScreenWidth - 40, this.getY());
 			return false;
 		}
 		if (this.getCoarseGrainedMinX() <= 0 && direction == 'L') {
+			this.setPosition(0 + 40, this.getY());
 			return false;
 		}
-//		// last check in case the 
-//		if (this.getCoarseGrainedMaxX() >= game.ScreenWidth || )
-		
 		return true;
 	}
 	
