@@ -17,9 +17,10 @@
 - **[15]** Make ball to break the bricks when it hits them
 - **[16]** Add lives, score, high score indicator
 - **[17]** Reduce lives when the ball goes below the screen 
+- **[18]** Add corrected ball collision detection
 - **[19]** Add different levels.
 - **[20]** Add cheat code to skip to the last level.
 
 ## Open Issues ##
 
-- **[18]** Add corrected ball collision detection
+**[21]** Add power-up 

@@ -69,17 +69,24 @@ import jig.Vector;
 		// bounce the ball...
 		boolean bounced = false;
 		if (this.hitPaddle(bg.paddle)) {
+			this.setPosition(this.getX(), bg.paddle.getY() - 30);
 			this.bounce(0);
 			bounced = true;
 		} else if (this.hitBrick(bg.bricks)) {
 			bg.incrementScore();
 			this.bounce(0);
 			bounced = true;
-		} else if (this.getCoarseGrainedMaxX() > bg.ScreenWidth
-				|| this.getCoarseGrainedMinX() < 0) {
+		} else if (this.getCoarseGrainedMaxX() > bg.ScreenWidth) {
+			this.setPosition(this.getX() - 8, this.getY());
 			this.bounce(90);
 			bounced = true;
+		} else if (this.getCoarseGrainedMinX() < 0) {
+			bounced = true;
+			this.setPosition(this.getX() + 8, this.getY());
+			this.bounce(90);
+			
 		} else if (this.getCoarseGrainedMinY() < BounceGame.GAME_START_BOUNDARY) {
+			this.setPosition(this.getX(), this.getY() + 6);
 			this.bounce(0);
 			bounced = true;
 		} else if (this.getCoarseGrainedMaxY() > bg.ScreenHeight) {
@@ -104,7 +111,6 @@ import jig.Vector;
 	 */
 	public void resetBall(BounceGame bg) {
 		float paddleX = bg.paddle.getX();
-		this.oldVelocity = this.getVelocity();
 		Vector ballVelocity = new Vector(0f, 0f);
 		this.setPosition(paddleX, 575f);
 		this.setVelocity(ballVelocity);

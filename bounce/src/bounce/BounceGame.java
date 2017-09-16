@@ -52,7 +52,9 @@ public class BounceGame extends StateBasedGame {
 	public static final int STARTUPSTATE = 1;
 	public static final int PLAYINGSTATE = 2;
 	public static final int GAMEOVERSTATE = 3;
+	
 	public static final int MAX_LEVELS = 3;
+	public static final int MAX_LIVES = 3;
 	
 	public static final String BREAKOUT_PIECES_RSC = "bounce/resource/breakout_pieces.png";
 	public static final String BALL_BALLIMG_RSC = "bounce/resource/ball.png";
@@ -63,6 +65,7 @@ public class BounceGame extends StateBasedGame {
 	public static final String BANG_EXPLOSIONSND_RSC = "bounce/resource/explosion.wav";
 	public static final String SPLASH_SCREEN_RSC = "bounce/resource/splashscreen.jpg";
 	public static final int GAME_START_BOUNDARY = 60;
+
 
 	public final int ScreenWidth;
 	public final int ScreenHeight;
@@ -191,7 +194,7 @@ public class BounceGame extends StateBasedGame {
 	 * Life setter
 	 */
 	public void setLife() {
-		this.life = 3;
+		this.life = MAX_LIVES;
 	}
 
 	/**
