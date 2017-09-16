@@ -79,6 +79,7 @@ public class BounceGame extends StateBasedGame {
 	Paddle paddle;
 	ArrayList<Bang> explosions;
 	Brick[][] bricks;
+	PowerUp powerUp;
 
 	/**
 	 * Create the BounceGame frame, saving the width and height for later use.
@@ -125,7 +126,6 @@ public class BounceGame extends StateBasedGame {
 		ResourceManager.loadImage(BANG_EXPLOSIONIMG_RSC);
 		ResourceManager.loadImage(BREAKOUT_PIECES_RSC);
 		ResourceManager.loadImage(SPLASH_SCREEN_RSC);
-		
 	}
 	
 	public static void main(String[] args) {
@@ -145,8 +145,8 @@ public class BounceGame extends StateBasedGame {
 	/**
 	 * Increments the score if a collision happens
 	 */
-	public void incrementScore() {
-		this.score += 1;
+	public void incrementScore(int score) {
+		this.score += score;
 	}
 	
 	/**

@@ -58,6 +58,10 @@ class PlayingState extends BasicGameState {
 		g.drawString("Lives: " + bg.getLife(), 205, 10);
 		g.drawString("High Score: " + bg.getHighScore(), 305, 10);
 		
+		if (bg.powerUp != null) {
+			bg.powerUp.render(g);
+		}
+		
 		for (Bang b : bg.explosions)
 			b.render(g);
 		
@@ -75,7 +79,8 @@ class PlayingState extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game,
 			int delta) throws SlickException {
 		
-		Input input = container.getInput();		
+		Input input = container.getInput();	
+		boolean killPowerUp;
 		
 		int bricksLeft = 0;
 		BounceGame bg = (BounceGame)game;
@@ -83,6 +88,15 @@ class PlayingState extends BasicGameState {
 		for (Ball ball: bg.ball) {
 			ball.update(bg, container, delta);
 		}
+		if (bg.getScore() > 0 && bg.getScore() % 10 == 0 && bg.powerUp == null) {
+			bg.powerUp  = new PowerUp(bg.paddle.getX() - 15, bg.paddle.getY() - 15);
+		} 
+		if (bg.powerUp != null) {
+			killPowerUp = bg.powerUp.update(bg, container, delta);
+			if (killPowerUp) {
+				bg.powerUp = null;
+			}
+ 		}
 		
 		bg.paddle.update(container, bg);
 		

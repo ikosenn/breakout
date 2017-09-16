@@ -78,4 +78,14 @@ public class Brick extends Entity {
 	public void reduceStrength( ) {
 		this.strength -= 1;
 	}
+
+	/**
+	 * Destroys the brick regardless of the strength
+	 * @return the current strength of the brick
+	 */
+	public int nukeBrick() {
+		int brickStrength = this.strength;
+		this.strength = 0;
+		return brickStrength;
+	}
 }
