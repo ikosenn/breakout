@@ -68,7 +68,6 @@ public class Paddle extends Entity {
 	public void update(GameContainer container, BounceGame game) throws SlickException {
 		Input input = container.getInput();
 		
-
 		boolean moved = false;
 		if ((input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT)) && this.checkCollision('L', game)) {
 			// check if the paddle was moving to the right

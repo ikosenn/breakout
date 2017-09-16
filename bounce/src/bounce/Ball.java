@@ -73,7 +73,7 @@ import jig.Vector;
 			this.bounce(0);
 			bounced = true;
 		} else if (this.hitBrick(bg.bricks)) {
-			bg.incrementScore();
+			bg.incrementScore(1);
 			this.bounce(0);
 			bounced = true;
 		} else if (this.getCoarseGrainedMaxX() > bg.ScreenWidth) {
