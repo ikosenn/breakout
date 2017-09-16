@@ -64,6 +64,9 @@ public class PowerUp extends Entity {
 				}
 			}
 		}
+		if (this.getCoarseGrainedMinY() <=0) {
+			return true;
+		}
 		return false;
 	}
 	
